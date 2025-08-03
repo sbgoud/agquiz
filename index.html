@@ -1,1 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Preparation Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            touch-action: manipulation; /* Prevents double-tap zoom on mobile */
+        }
+        .quiz-container {
+            max-width: 800px;
+            width: 95%;
+        }
+        .option {
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+        }
+        .option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .correct {
+            background-color: #10B981 !important; /* Tailwind green-500 */
+            color: white !important;
+            border-color: #059669 !important;
+        }
+        .incorrect {
+            background-color: #EF4444 !important; /* Tailwind red-500 */
+            color: white !important;
+            border-color: #DC2626 !important;
+        }
+        .progress-bar-inner {
+            transition: width 0.5s ease-in-out;
+        }
+        /* Adding a subtle animation for the question transition */
+        .question-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
+    <div id="quiz-container" class="quiz-container bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+        <!-- Quiz Header -->
+        <div class="mb-6">
+            <div class="flex justify-between items-center mb-2">
+                <p class="text-sm font-medium text-gray-500">Question <span id="question-number">1</span> of <span id="total-questions">365</span></p>
+                <p id="score" class="text-sm font-semibold text-indigo-600">Score: 0</p>
+            </div>
+            <!-- Progress Bar -->
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full progress-bar-inner" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Question and Options -->
+        <div id="question-area">
+            <h2 id="question-text" class="text-xl sm:text-2xl font-bold text-gray-800 mb-6 min-h-[100px]">Loading question...</h2>
+            <div id="options-container" class="space-y-4">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+        </div>
+        
+        <!-- Result Screen -->
+        <div id="result-screen" class="hidden text-center">
+             <h2 class="text-3xl font-bold text-gray-800 mb-4">Quiz Completed!</h2>
+             <p class="text-xl text-gray-600 mb-2">Your Final Score:</p>
+             <p id="final-score" class="text-5xl font-extrabold text-indigo-600 mb-8">0 / 0</p>
+             <button id="restart-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-indigo-700 transition-colors duration-300 shadow-md">
+                Restart Quiz
+             </button>
+        </div>
+
+    </div>
+
+    <script>
+        // --- DATA: Questions and Answers ---
+        // I have extracted the first 30 questions. You can add the rest following this format.
+        const quizData = [
+            {
+                question: "The date on which CCS (Leave) Rules, 1972 came into effect is-",
+                options: ["1st January, 1972", "2nd April, 1972", "1st June, 1972", "15th August, 1972"],
+                answer: "1st June, 1972"
+            },
+            {
+                question: "CCS (Leave) Rules, 1972 is not applicable to-",
+                options: ["Persons appointed to the Civil services", "Employees of non-statutory departmental canteens", "Government servants appointed in subordinate of Central Government", "Persons paid from contingencies"],
+                answer: "Persons paid from contingencies"
+            },
+            {
+                question: "CCS (Leave) Rules, 1972 applies to a person serving under Central Government on deputation from a State Government-",
+                options: ["for the rest of his service", "for a limited duration", "from the date of his joining State Government", "None of the above"],
+                answer: "for a limited duration"
+            },
+            {
+                question: "How many schedules does the CCS (Leave) Rules contain?",
+                options: ["One", "Two", "Three", "Four"],
+                answer: "Two"
+            },
+            {
+                question: "An authority competent to grant leave is contained in the-",
+                options: ["First Schedule", "Rule 3-Definitions", "Second Schedule", "Third Schedule"],
+                answer: "First Schedule"
+            },
+            {
+                question: "The word 'Vacation Department' according to the definition of leave rules means-",
+                options: ["A department which works during vacation", "A department to which regular vacations are allowed", "A department where workers from other departments come to work", "A department which does not count work done during vacation"],
+                answer: "A department to which regular vacations are allowed"
+            },
+            {
+                question: "CCS (Leave) Rules will apply to Government servants while on",
+                options: ["Temporary transfer to Indian Railways", "Temporary transfer to a State Government", "Foreign service within India", "All the above"],
+                answer: "All the above"
+            },
+            {
+                question: "According to Leave Rules, an authority competent to grant leave cannot refuse or revoke a leave applied under-",
+                options: ["Rule 7", "Rule 15", "Rule 20", "Rule 27"],
+                answer: "Rule 20"
+            },
+            {
+                question: "What is the reason for not denying earned leave during the last ten years of service?",
+                options: ["To increase efficiency of public service by refreshing the Government servants", "To decrease the accumulation of earned leave", "The Government servant has only few years left for his retirement", "The leave sanctioning authority does not have the power to refuse earned leave"],
+                answer: "To decrease the accumulation of earned leave"
+            },
+            {
+                question: "A Government servant who retired on invalid pension, if re-employed is allowed to count his service for leave if-",
+                options: ["He is allowed to count his service for pension", "He is allowed encashment of leave", "He is allowed carry forward of leave", "None of the above"],
+                answer: "He is allowed to count his service for pension"
+            },
+            {
+                question: "A Government servant's claim to leave is regulated by the rules in force at the time the leave is-",
+                options: ["Applied and granted", "Debitated to the leave account", "Availed", "Encashed"],
+                answer: "Applied and granted"
+            },
+            {
+                question: "Extraordinary leave granted on medical certificate may be commuted retrospectively into leave not due subject to provisions of-",
+                options: ["Rule 30", "Rule 31", "Rule 28", "Rule 29"],
+                answer: "Rule 31"
+            },
+            {
+                question: "EL can be combined with-",
+                options: ["Casual Leave, Half Pay Leave, Maternity Leave", "Study Leave, Casual Leave, Maternity Leave", "Sick Leave, Half Pay Leave, Maternity Leave", "Casual Leave, Paternity Leave, Maternity Leave"],
+                answer: "Sick Leave, Half Pay Leave, Maternity Leave"
+            },
+            {
+                question: "EOL is granted to Government servants only-",
+                options: ["When no other leave is admissible or on request", "When Government servant is on notice period of VRS", "Before superannuation", "None of the above"],
+                answer: "When no other leave is admissible or on request"
+            },
+            {
+                question: "Encashment of earned leave of up to 10 days at the time of availing LTC is permitted, provided a balance of........ days of EL is available at the credit of a Government servant.",
+                options: ["180 days", "45 days", "30 days", "300 days"],
+                answer: "30 days"
+            },
+            {
+                question: "Completed years of service, according to CCS (Leave) Rules means-",
+                options: ["Continuous service under Central Government including period spent on duty but not counting leave", "Continuous service under Central Government including period spent on duty and leave but not EXOL", "Continuous service under Central Government including period spent on duty and leave including EXOL", "Continuous service under Central Government including service in State Government, if any"],
+                answer: "Continuous service under Central Government including period spent on duty and leave including EXOL"
+            },
+            {
+                question: "What is the maximum period of leave of any kind which can be allowed to a Government servant?",
+                options: ["5 years", "6 years", "7 years", "2 years"],
+                answer: "5 years"
+            },
+            {
+                question: "Paternity Leave is allowed for........ days",
+                options: ["20 days", "15 days", "25 days", "30 days"],
+                answer: "15 days"
+            },
+            {
+                question: "What is the maximum amount of study leave which can be availed by a Government servant, other than CHS Officers in his entire service?",
+                options: ["24 months", "12 months", "10 months", "15 months"],
+                answer: "24 months"
+            },
+            {
+                question: "What is the maximum number of days of EL that can be held at credit by a Government servant?",
+                options: ["300", "200", "250", "180"],
+                answer: "300"
+            },
+            {
+                question: "What is the date of retirement of a Government servant?",
+                options: ["Afternoon of the last day of the month in which he attains the age of superannuation", "Last day of any month in which he wishes to retire", "Last working day", "First day of the month in which he attains the age of superannuation"],
+                answer: "Afternoon of the last day of the month in which he attains the age of superannuation"
+            },
+            {
+                question: "If an official is recalled to duty before expiry of his leave, he may be treated as",
+                options: ["On leave period", "On duty", "Absent", "None of the above"],
+                answer: "On duty"
+            },
+            {
+                question: "Casual Leave can be combined with...............",
+                options: ["Special Casual Leave", "Earned Leave", "Half Pay Leave", "None of the above"],
+                answer: "Special Casual Leave"
+            },
+            {
+                question: "Combination of Study Leave with earned leave shall not generally involve a total absence of more than-",
+                options: ["16 months", "24 months", "28 months", "36 months"],
+                answer: "28 months"
+            },
+            {
+                question: "Half-a-day leave can be taken from...........",
+                options: ["Earned Leave", "Sick Leave", "Casual Leave", "Half Pay Leave"],
+                answer: "Casual Leave"
+            },
+            {
+                question: "Government servants are not entitled to leave salary while availing-",
+                options: ["Half pay leave", "Commuted leave", "Extraordinary leave", "Child care leave"],
+                answer: "Extraordinary leave"
+            },
+            {
+                question: "The maximum period of CCL that can be availed by a woman Government servant during her entire service is-",
+                options: ["730 (2 years)", "700 days", "650 days", "365 days (1 year)"],
+                answer: "730 (2 years)"
+            },
+            {
+                question: "Foreign service means service in which a Government servant receives his pay from-",
+                options: ["Consolidated fund of India", "Consolidated fund of State", "Consolidated fund of Union Territory", "None of the above"],
+                answer: "None of the above"
+            },
+            {
+                question: "Child care leave is admissible if the child is below",
+                options: ["18 years", "17 years", "21 years", "25 years"],
+                answer: "18 years"
+            },
+            {
+                question: "In a calendar year, CCL cannot be granted for more than-",
+                options: ["2 times", "3 times", "4 times", "6 times"],
+                answer: "3 times"
+            }
+        ];
+
+        // --- DOM Elements ---
+        const quizContainer = document.getElementById('quiz-container');
+        const questionArea = document.getElementById('question-area');
+        const questionNumberEl = document.getElementById('question-number');
+        const totalQuestionsEl = document.getElementById('total-questions');
+        const questionTextEl = document.getElementById('question-text');
+        const optionsContainerEl = document.getElementById('options-container');
+        const progressBarEl = document.getElementById('progress-bar');
+        const scoreEl = document.getElementById('score');
+        const resultScreenEl = document.getElementById('result-screen');
+        const finalScoreEl = document.getElementById('final-score');
+        const restartBtn = document.getElementById('restart-btn');
+
+        // --- Quiz State ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+        const totalQuestions = quizData.length; // Change this to 365 when all questions are added
+
+        // --- Functions ---
+
+        /**
+         * Starts or restarts the quiz.
+         */
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultScreenEl.classList.add('hidden');
+            questionArea.classList.remove('hidden');
+            quizContainer.querySelector('.mb-6').classList.remove('hidden');
+            updateScore();
+            displayQuestion();
+        }
+
+        /**
+         * Displays the current question and its options.
+         */
+        function displayQuestion() {
+            // Reset for the next question
+            optionsContainerEl.innerHTML = '';
+            questionArea.classList.remove('question-fade-in');
+            void questionArea.offsetWidth; // Trigger reflow to restart animation
+            questionArea.classList.add('question-fade-in');
+            
+            // Check if quiz is over
+            if (currentQuestionIndex >= totalQuestions) {
+                showResults();
+                return;
+            }
+
+            // Update question number and progress bar
+            questionNumberEl.textContent = currentQuestionIndex + 1;
+            totalQuestionsEl.textContent = totalQuestions;
+            const progressPercentage = ((currentQuestionIndex) / totalQuestions) * 100;
+            progressBarEl.style.width = `${progressPercentage}%`;
+
+            // Get current question data
+            const currentQuestion = quizData[currentQuestionIndex];
+            questionTextEl.textContent = currentQuestion.question;
+
+            // Create and display option buttons
+            currentQuestion.options.forEach(optionText => {
+                const optionButton = document.createElement('button');
+                optionButton.textContent = optionText;
+                optionButton.classList.add('option', 'w-full', 'p-4', 'text-left', 'bg-white', 'border', 'border-gray-300', 'rounded-lg', 'hover:bg-indigo-50', 'hover:border-indigo-400', 'focus:outline-none', 'focus:ring-2', 'focus:ring-indigo-500');
+                optionButton.addEventListener('click', () => handleOptionClick(optionButton, currentQuestion.answer));
+                optionsContainerEl.appendChild(optionButton);
+            });
+        }
+
+        /**
+         * Handles the click event on an option.
+         * @param {HTMLElement} selectedButton - The button element that was clicked.
+         * @param {string} correctAnswer - The correct answer for the current question.
+         */
+        function handleOptionClick(selectedButton, correctAnswer) {
+            // Disable all buttons to prevent multiple answers
+            const allOptions = optionsContainerEl.querySelectorAll('.option');
+            allOptions.forEach(btn => btn.disabled = true);
+
+            const selectedAnswer = selectedButton.textContent;
+
+            if (selectedAnswer === correctAnswer) {
+                score++;
+                selectedButton.classList.add('correct');
+            } else {
+                selectedButton.classList.add('incorrect');
+                // Highlight the correct answer
+                allOptions.forEach(btn => {
+                    if (btn.textContent === correctAnswer) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+
+            updateScore();
+
+            // Wait for a moment, then show the next question
+            setTimeout(() => {
+                currentQuestionIndex++;
+                displayQuestion();
+            }, 1500); // 1.5-second delay
+        }
+
+        /**
+         * Updates the score display.
+         */
+        function updateScore() {
+            scoreEl.textContent = `Score: ${score}`;
+        }
+        
+        /**
+         * Shows the final result screen.
+         */
+        function showResults() {
+            questionArea.classList.add('hidden');
+            quizContainer.querySelector('.mb-6').classList.add('hidden'); // Hide header
+            resultScreenEl.classList.remove('hidden');
+            finalScoreEl.textContent = `${score} / ${totalQuestions}`;
+            progressBarEl.style.width = `100%`;
+        }
+
+
+        // --- Event Listeners ---
+        document.addEventListener('DOMContentLoaded', startQuiz);
+        restartBtn.addEventListener('click', startQuiz);
+    </script>
+
+</body>
+</html>
