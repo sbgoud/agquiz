@@ -1,0 +1,217 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" role="img" aria-label="Ultra redesigned Home Dashboard">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="hdrGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFE3E3"/>
+      <stop offset="1" stop-color="#FFE9F0"/>
+    </linearGradient>
+    <linearGradient id="ctaRed" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F43F5E"/>
+      <stop offset="1" stop-color="#DC2626"/>
+    </linearGradient>
+    <linearGradient id="ctaBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#60A5FA"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="chip" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FAFAFA"/>
+    </linearGradient>
+    <!-- Shadows -->
+    <filter id="lg" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000" flood-opacity="0.12"/>
+    </filter>
+    <filter id="md" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="7" stdDeviation="12" flood-color="#000" flood-opacity="0.10"/>
+    </filter>
+    <filter id="sm" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.08"/>
+    </filter>
+    <!-- Typography -->
+    <style>
+      .t { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, Arial, sans-serif; }
+      .title { fill: #0F172A; }
+      .muted { fill: #6B7280; }
+      .soft { fill: #94A3B8; }
+      .label { fill: #334155; }
+      .white { fill: #FFFFFF; }
+      .accent { fill: #DC2626; }
+      .bold { font-weight: 700; }
+      .semi { font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect x="0" y="0" width="390" height="844" fill="#F6F7FA"/>
+
+  <!-- Header: gradient with curved bottom -->
+  <g>
+    <path d="M0,0 H390 V190 C310,205 230,190 195,202 C160,214 80,205 0,222 Z" fill="url(#hdrGrad)"/>
+    <!-- Top controls -->
+    <g transform="translate(16,16)">
+      <rect x="0" y="0" width="36" height="36" rx="18" fill="#FFFFFFAA"/>
+      <text x="18" y="23" text-anchor="middle" class="t title bold" font-size="16">≡</text>
+    </g>
+    <g transform="translate(338,16)">
+      <rect x="0" y="0" width="36" height="36" rx="18" fill="#FFFFFFAA"/>
+      <text x="18" y="23" text-anchor="middle" class="t title bold" font-size="16">⎋</text>
+    </g>
+    <!-- Greeting -->
+    <text x="20" y="82" class="t soft" font-size="13">Welcome back</text>
+    <text x="20" y="112" class="t title bold" font-size="26">Let’s make a difference</text>
+    <!-- Search pill -->
+    <g transform="translate(16,128)" filter="url(#sm)">
+      <rect x="0" y="0" width="358" height="46" rx="23" fill="#FFFFFF"/>
+      <text x="16" y="30" class="t muted" font-size="14">Search donors, requests, or hospitals</text>
+      <circle cx="328" cy="23" r="10" fill="#DC2626"/>
+    </g>
+  </g>
+
+  <!-- Twin CTAs -->
+  <g transform="translate(16,196)">
+    <g filter="url(#md)">
+      <rect x="0" y="0" width="172" height="110" rx="16" fill="url(#ctaRed)"/>
+      <text x="14" y="34" class="t white bold" font-size="16">Donate</text>
+      <text x="14" y="58" class="t white" font-size="12" opacity="0.95">Eligibility • Nearby</text>
+      <g transform="translate(14,70)">
+        <rect x="0" y="0" width="78" height="28" rx="8" fill="#FFFFFF"/>
+        <text x="39" y="19" text-anchor="middle" class="t title semi" font-size="12">Start</text>
+      </g>
+      <circle cx="148" cy="18" r="12" fill="#FFFFFF22"/>
+    </g>
+    <g filter="url(#md)" transform="translate(186,0)">
+      <rect x="0" y="0" width="172" height="110" rx="16" fill="url(#ctaBlue)"/>
+      <text x="14" y="34" class="t white bold" font-size="16">Find donors</text>
+      <text x="14" y="58" class="t white" font-size="12" opacity="0.95">Group • Urgency</text>
+      <g transform="translate(14,70)">
+        <rect x="0" y="0" width="78" height="28" rx="8" fill="#FFFFFF22" stroke="#FFFFFF55"/>
+        <text x="39" y="19" text-anchor="middle" class="t white semi" font-size="12">Search</text>
+      </g>
+      <circle cx="148" cy="18" r="12" fill="#FFFFFF22"/>
+    </g>
+  </g>
+
+  <!-- KPI masonry -->
+  <g transform="translate(16,318)">
+    <!-- Tall card -->
+    <g filter="url(#sm)">
+      <rect x="0" y="0" width="172" height="130" rx="16" fill="url(#chip)"/>
+      <text x="16" y="34" class="t soft" font-size="12">Your blood group</text>
+      <text x="16" y="64" class="t title bold" font-size="32">O+</text>
+      <text x="16" y="90" class="t muted" font-size="12">Compatible: A+, B+, AB+</text>
+    </g>
+    <!-- Two stacked cards -->
+    <g transform="translate(186,0)">
+      <g filter="url(#sm)">
+        <rect x="0" y="0" width="172" height="62" rx="16" fill="url(#chip)"/>
+        <text x="16" y="26" class="t soft" font-size="12">Days until eligible</text>
+        <text x="150" y="30" text-anchor="end" class="t title bold" font-size="20">18</text>
+      </g>
+      <g filter="url(#sm)" transform="translate(0,68)">
+        <rect x="0" y="0" width="172" height="62" rx="16" fill="url(#chip)"/>
+        <text x="16" y="26" class="t soft" font-size="12">Lives impacted</text>
+        <text x="150" y="30" text-anchor="end" class="t title bold" font-size="20">156</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Sticky controls -->
+  <g transform="translate(16,460)">
+    <text x="0" y="0" dy="18" class="t title bold" font-size="18">Activity</text>
+    <g transform="translate(0,26)">
+      <g filter="url(#sm)">
+        <rect x="0" y="0" width="88" height="34" rx="17" fill="#0F172A"/>
+        <text x="44" y="22" text-anchor="middle" class="t white semi" font-size="12">Feed</text>
+      </g>
+      <g filter="url(#sm)" transform="translate(96,0)">
+        <rect x="0" y="0" width="94" height="34" rx="17" fill="#FFFFFF"/>
+        <text x="47" y="22" text-anchor="middle" class="t muted semi" font-size="12">Donors</text>
+      </g>
+      <g filter="url(#sm)" transform="translate(196,0)">
+        <rect x="0" y="0" width="102" height="34" rx="17" fill="#FFFFFF"/>
+        <text x="51" y="22" text-anchor="middle" class="t muted semi" font-size="12">Requests</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Modern request cards -->
+  <g transform="translate(16,520)">
+    <!-- Card 1 -->
+    <g filter="url(#sm)">
+      <rect x="0" y="0" width="358" height="100" rx="16" fill="#FFFFFF"/>
+      <rect x="14" y="22" width="56" height="56" rx="14" fill="#FFE4E6"/>
+      <text x="42" y="55" text-anchor="middle" class="t accent bold" font-size="16">O-</text>
+      <text x="82" y="34" class="t title semi" font-size="16">Anita Kumar</text>
+      <text x="82" y="56" class="t muted" font-size="13">KIMS Hospital</text>
+      <text x="82" y="76" class="t soft" font-size="12">5 min • 1.8 km</text>
+      <g transform="translate(250,16)">
+        <rect x="0" y="0" width="94" height="24" rx="8" fill="#FFE8EA"/>
+        <text x="47" y="17" text-anchor="middle" class="t accent semi" font-size="11">Emergency</text>
+      </g>
+      <g transform="translate(280,64)">
+        <rect x="0" y="0" width="64" height="28" rx="8" fill="#10B981"/>
+        <text x="32" y="19" text-anchor="middle" class="t white semi" font-size="12">Contact</text>
+      </g>
+    </g>
+
+    <!-- Card 2 -->
+    <g filter="url(#sm)" transform="translate(0,112)">
+      <rect x="0" y="0" width="358" height="100" rx="16" fill="#FFFFFF"/>
+      <rect x="14" y="22" width="56" height="56" rx="14" fill="#DBEAFE"/>
+      <text x="42" y="55" text-anchor="middle" class="t" font-size="16" font-weight="700" fill="#2563EB">A+</text>
+      <text x="82" y="34" class="t title semi" font-size="16">Rahul Singh</text>
+      <text x="82" y="56" class="t muted" font-size="13">Apollo Hospital</text>
+      <text x="82" y="76" class="t soft" font-size="12">Now • 2.1 km</text>
+      <g transform="translate(250,16)">
+        <rect x="0" y="0" width="94" height="24" rx="8" fill="#FFEDD5"/>
+        <text x="47" y="17" text-anchor="middle" class="t" font-size="11" font-weight="700" fill="#9A3412">Urgent</text>
+      </g>
+      <g transform="translate(280,64)">
+        <rect x="0" y="0" width="64" height="28" rx="8" fill="#111827"/>
+        <text x="32" y="19" text-anchor="middle" class="t white semi" font-size="12">Details</text>
+      </g>
+    </g>
+
+    <!-- Card 3 -->
+    <g filter="url(#sm)" transform="translate(0,224)">
+      <rect x="0" y="0" width="358" height="100" rx="16" fill="#FFFFFF"/>
+      <rect x="14" y="22" width="56" height="56" rx="14" fill="#ECFDF5"/>
+      <text x="42" y="55" text-anchor="middle" class="t" font-size="16" font-weight="700" fill="#047857">B-</text>
+      <text x="82" y="34" class="t title semi" font-size="16">Maya Rao</text>
+      <text x="82" y="56" class="t muted" font-size="13">Global Hospital</text>
+      <text x="82" y="76" class="t soft" font-size="12">20 min • 4.2 km</text>
+      <g transform="translate(250,16)">
+        <rect x="0" y="0" width="94" height="24" rx="8" fill="#E5E7EB"/>
+        <text x="47" y="17" text-anchor="middle" class="t" font-size="11" font-weight="700" fill="#374151">Normal</text>
+      </g>
+      <g transform="translate(280,64)">
+        <rect x="0" y="0" width="64" height="28" rx="8" fill="#111827"/>
+        <text x="32" y="19" text-anchor="middle" class="t white semi" font-size="12">Details</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Floating Create button -->
+  <g transform="translate(292,736)" filter="url(#lg)">
+    <rect x="0" y="0" width="82" height="44" rx="22" fill="url(#ctaRed)"/>
+    <text x="41" y="28" text-anchor="middle" class="t white bold" font-size="14">＋ Post</text>
+  </g>
+
+  <!-- Bottom Tab (subtle rounded) -->
+  <g transform="translate(0,784)" filter="url(#sm)">
+    <rect x="0" y="0" width="390" height="60" fill="#FFFFFF"/>
+    <rect x="0" y="0" width="390" height="1" fill="#EEF2F7"/>
+    <g transform="translate(70,8)">
+      <circle cx="0" cy="16" r="16" fill="#DC2626"/>
+      <text x="0" y="42" text-anchor="middle" class="t semi" font-size="12" fill="#DC2626">Home</text>
+    </g>
+    <g transform="translate(195,8)">
+      <circle cx="0" cy="16" r="16" fill="#E5E7EB"/>
+      <text x="0" y="42" text-anchor="middle" class="t muted" font-size="12">Request</text>
+    </g>
+    <g transform="translate(320,8)">
+      <circle cx="0" cy="16" r="16" fill="#E5E7EB"/>
+      <text x="0" y="42" text-anchor="middle" class="t muted" font-size="12">Profile</text>
+    </g>
+  </g>
+</svg>
